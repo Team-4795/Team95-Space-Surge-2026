@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -59,6 +61,13 @@ public class RobotContainer {
   double deadbandedTrigger2 = MathUtil.applyDeadband(rawTrigger2, 0.1);
   m_operatorController.rightTrigger().whileTrue(Commands.run(()->Arm.setVoltage(1))); 
   m_operatorController.leftTrigger().whileTrue(Commands.run(()->Arm.setVoltage(-1)));
+
+  m_drive.setDefaultCommand(
+    Commands.run(
+        () -> m_drive.tankDrive(
+            -m_driverController.getLeftY(),
+            -m_driverController.getRightY()),
+        m_drive));
   
   
 }
