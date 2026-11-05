@@ -8,8 +8,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Drive.Drive;
+import frc.robot.subsystems.Drive.DriveSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -28,7 +29,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Arm m_arm = new Arm();
-  private final Drive m_drive = new Drive();
+  private final DriveSim m_drive = new DriveSim();
+  //sim rn
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -62,13 +64,22 @@ public class RobotContainer {
   m_operatorController.rightTrigger().whileTrue(Commands.run(()->Arm.setVoltage(1))); 
   m_operatorController.leftTrigger().whileTrue(Commands.run(()->Arm.setVoltage(-1)));
 
+
+
   m_drive.setDefaultCommand(
     Commands.run(
         () -> m_drive.tankDrive(
             -m_driverController.getLeftY(),
             -m_driverController.getRightY()),
         m_drive));
-  
+   /**
+    * m_drive.setDefaultCommand(
+    * Commands.run( 
+        ()->m_drive.arcadeDrive(
+            -m_driverController.getLeftY(),
+            -m_driverController.getRightX()),
+        m_drive));
+    */
   
 }
 

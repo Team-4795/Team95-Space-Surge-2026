@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.Drive;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
@@ -24,4 +24,7 @@ public class Drive extends SubsystemBase {
     public void tankDrive(double leftSpeed, double rightSpeed) {
         m_robotDrive.tankDrive(leftSpeed, rightSpeed);
     }
+/**public void arcadeDrive(double speed, double rotation) {
+        m_robotDrive.arcadeDrive(speed, rotation);
+    }**/
 }
