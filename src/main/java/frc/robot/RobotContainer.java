@@ -7,8 +7,9 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Arm.Arm;
+import frc.robot.subsystems.Arm.ArmSim;
 import frc.robot.subsystems.Drive.Drive;
 import frc.robot.subsystems.Drive.DriveSim;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,7 +29,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final Arm m_arm = new Arm();
+  private final ArmSim m_arm = new ArmSim();
   private final DriveSim m_drive = new DriveSim();
   private boolean m_arcadeMode = false;
   //sim rn
@@ -58,35 +59,38 @@ public class RobotContainer {
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
   
-  double rawTrigger = m_operatorController.getRightTriggerAxis();
-  double rawTrigger2 = m_operatorController.getLeftTriggerAxis();
-  double deadbandedTrigger = MathUtil.applyDeadband(rawTrigger, 0.1);
-  double deadbandedTrigger2 = MathUtil.applyDeadband(rawTrigger2, 0.1);
-  m_operatorController.rightTrigger().whileTrue(Commands.run(()->Arm.setVoltage(1))); 
-  m_operatorController.leftTrigger().whileTrue(Commands.run(()->Arm.setVoltage(-1)));
-
-
-
-    m_drive.setDefaultCommand(
-      Commands.run(
-          () -> m_drive.tankDrive(
-              -m_driverController.getLeftY(),
-              -m_driverController.getRightY()),
-          m_drive));
-   
-    m_drive.setDefaultCommand(
-      Commands.run( 
-          ()->m_drive.arcadeDrive(
-              -m_driverController.getLeftY(),
-              -m_driverController.getRightX()),
-          m_drive));
+    m_arm.setDefaultCommand(Commands.run(() -> m_arm.setArmSpeed(0), m_arm));
     
-m_driverController.y().onTrue(
-  Commands.runOnce(()->m_arcadeMode = !m_arcadeMode ));
+    m_operatorController.rightTrigger().whileTrue(Commands.run(() -> m_arm.setArmSpeed(9), m_arm));
+    m_operatorController.leftTrigger().whileTrue(Commands.run(() -> m_arm.setArmSpeed(-9), m_arm));
   
-}
-
-  /**
+  
+  
+      m_drive.setDefaultCommand(
+        Commands.run(
+            () -> m_drive.tankDrive(
+                -m_driverController.getLeftY(),
+                -m_driverController.getRightY()),
+            m_drive));
+     
+      m_drive.setDefaultCommand(
+        Commands.run( 
+            ()->m_drive.arcadeDrive(
+                -m_driverController.getLeftY(),
+                -m_driverController.getRightX()),
+            m_drive));
+      
+  m_driverController.y().onTrue(
+    Commands.runOnce(()->m_arcadeMode = !m_arcadeMode ));
+    
+  }
+  
+    private Object m_setArmSpeed(int i) {
+      // TODO Auto-generated method stub
+      throw new UnsupportedOperationException("Unimplemented method 'm_setArmSpeed'");
+    }
+  
+    /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
