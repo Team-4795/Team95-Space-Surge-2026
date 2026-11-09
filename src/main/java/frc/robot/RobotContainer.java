@@ -30,6 +30,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final Arm m_arm = new Arm();
   private final DriveSim m_drive = new DriveSim();
+  private boolean m_arcadeMode = false;
   //sim rn
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -66,20 +67,22 @@ public class RobotContainer {
 
 
 
-  m_drive.setDefaultCommand(
-    Commands.run(
-        () -> m_drive.tankDrive(
-            -m_driverController.getLeftY(),
-            -m_driverController.getRightY()),
-        m_drive));
-   /**
-    * m_drive.setDefaultCommand(
-    * Commands.run( 
-        ()->m_drive.arcadeDrive(
-            -m_driverController.getLeftY(),
-            -m_driverController.getRightX()),
-        m_drive));
-    */
+    m_drive.setDefaultCommand(
+      Commands.run(
+          () -> m_drive.tankDrive(
+              -m_driverController.getLeftY(),
+              -m_driverController.getRightY()),
+          m_drive));
+   
+    m_drive.setDefaultCommand(
+      Commands.run( 
+          ()->m_drive.arcadeDrive(
+              -m_driverController.getLeftY(),
+              -m_driverController.getRightX()),
+          m_drive));
+    
+m_driverController.y().onTrue(
+  Commands.runOnce(()->m_arcadeMode = !m_arcadeMode ));
   
 }
 

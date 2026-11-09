@@ -24,7 +24,8 @@ public class Drive extends SubsystemBase {
     public void tankDrive(double leftSpeed, double rightSpeed) {
         m_robotDrive.tankDrive(leftSpeed, rightSpeed);
     }
-/**public void arcadeDrive(double speed, double rotation) {
+   
+    public void arcadeDrive(double speed, double rotation) {
         m_robotDrive.arcadeDrive(speed, rotation);
-    }**/
+    }
 }
