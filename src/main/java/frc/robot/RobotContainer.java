@@ -4,14 +4,16 @@
 
 package frc.robot;
 
+import frc.robot.Autos.Autos;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Arm.Arm;
 import frc.robot.subsystems.Arm.ArmSim;
 import frc.robot.subsystems.Drive.Drive;
 import frc.robot.subsystems.Drive.DriveSim;
+import frc.robot.Autos.Autos;
+import frc.robot.Autos.AutosSim;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -66,22 +68,22 @@ public class RobotContainer {
   
   
   
-      m_drive.setDefaultCommand(
+     m_drive.setDefaultCommand(
         Commands.run(
             () -> m_drive.tankDrive(
                 -m_driverController.getLeftY(),
                 -m_driverController.getRightY()),
-            m_drive));
+            m_drive)); 
      
-      m_drive.setDefaultCommand(
+/**       m_drive.setDefaultCommand(
         Commands.run( 
             ()->m_drive.arcadeDrive(
                 -m_driverController.getLeftY(),
                 -m_driverController.getRightX()),
-            m_drive));
+            m_drive)); 
       
-  m_driverController.y().onTrue(
-    Commands.runOnce(()->m_arcadeMode = !m_arcadeMode ));
+   m_driverController.y().onTrue(
+    Commands.runOnce(()->m_arcadeMode = !m_arcadeMode ));**/
     
   }
   
@@ -97,6 +99,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return Autos.Autos(m_drive, m_arm).getAutonomousCommand();
   }
 }
