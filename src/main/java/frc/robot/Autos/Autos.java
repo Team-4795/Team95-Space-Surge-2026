@@ -21,9 +21,13 @@ public final class Autos
         return Commands.sequence(
             Commands.runOnce(() -> m_arm.setArmSpeed(1), m_arm),
             Commands.waitSeconds(1),
-            Commands.runOnce(() -> m_arm.setArmSpeed(0), m_arm),
-            Commands.runOnce(() -> m_drive.arcadeDrive(0.5, 0), m_drive),
+            Commands.runOnce(() -> m_arm.setArmSpeed(-1), m_arm),
+            Commands.waitSeconds(1),
+            Commands.runOnce(() -> m_drive.arcadeDrive(1, 0), m_drive),
             Commands.waitSeconds(3),
+            Commands.runOnce(() -> m_drive.arcadeDrive(0, 0), m_drive),
+            Commands.runOnce(()->m_drive.arcadeDrive(0, 1), m_drive),
+            Commands.waitSeconds(1),
             Commands.runOnce(() -> m_drive.arcadeDrive(0, 0), m_drive)
         );
     }

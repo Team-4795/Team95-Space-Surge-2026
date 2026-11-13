@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
 public class Drive extends SubsystemBase {
-    private final PWMSparkMax m_leftMotor = new PWMSparkMax(0);
-    private final PWMSparkMax m_rightMotor = new PWMSparkMax(1);
+    private final PWMSparkMax m_leftMotor = new PWMSparkMax(1);
+    private final PWMSparkMax m_rightMotor = new PWMSparkMax(0);
 
     private final DifferentialDrive m_robotDrive;
 
     public Drive() {
-        m_rightMotor.setInverted(true);
+        m_leftMotor.setInverted(true);
 
         m_robotDrive = new DifferentialDrive(
             m_leftMotor::set,
